@@ -15,18 +15,14 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    /**
-     * Obtiene el usuario actualmente autenticado desde el contexto de seguridad.
-     */
+     // Obtiene el usuario actualmente autenticado desde el contexto de seguridad.
     private User getAuthenticatedUser() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
     }
 
-    /**
-     * Actualiza el perfil del usuario autenticado.
-     */
+     //  Actualiza el perfil del usuario autenticado.
     public User updateUser(UserUpdateRequest request) {
         User user = getAuthenticatedUser();
 
@@ -49,9 +45,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    /**
-     * Elimina la cuenta del usuario autenticado.
-     */
+     // Elimina la cuenta del usuario autenticado.
     public void deleteUser() {
         User user = getAuthenticatedUser();
         userRepository.delete(user);

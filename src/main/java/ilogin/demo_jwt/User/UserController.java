@@ -16,9 +16,7 @@ public class UserController {
 
     private final UserService userService;
 
-    /**
-     * Endpoint para que el usuario autenticado actualice su propia información.
-     */
+     // Endpoint para que el usuario autenticado actualice su propia información.
     @PutMapping(value = "update")
     public ResponseEntity<User> updateUser(@RequestBody UserUpdateRequest request) {
         // Retornamos el usuario actualizado (sin la contraseña)
@@ -27,9 +25,7 @@ public class UserController {
         return ResponseEntity.ok(userService.updateUser(request));
     }
 
-    /**
-     * Endpoint para que el usuario autenticado elimine su propia cuenta.
-     */
+     // Endpoint para que el usuario autenticado elimine su propia cuenta.
     @DeleteMapping(value = "delete")
     public ResponseEntity<String> deleteUser() {
         userService.deleteUser();
