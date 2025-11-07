@@ -18,7 +18,7 @@ public class UserController {
 
      // Endpoint para que el usuario autenticado actualice su propia información.
     @PutMapping(value = "update")
-    public ResponseEntity<User> updateUser(@RequestBody UserUpdateRequest request) {
+    public ResponseEntity<UserResponseDTO> updateUser(@RequestBody UserUpdateRequest request) {
         // Retornamos el usuario actualizado (sin la contraseña)
         // Nota: La entidad User (UserDetails) no debería exponer la contraseña
         // al ser devuelta. Considera un UserResponseDTO si es necesario.

@@ -39,7 +39,8 @@ public class AuthService {
                 .firstname(request.getFirstname())
                 .lastname(request.lastname)
                 .country(request.getCountry())
-                .role(Role.USER)
+                // Si el rol no se envía, se asigna USER por defecto
+                .role(request.getRole() == null ? Role.USER : request.getRole())
                 .build();
 
         userRepository.save(user);

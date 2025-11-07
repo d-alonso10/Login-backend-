@@ -1,6 +1,7 @@
 package ilogin.demo_jwt.Config;
 
 import ilogin.demo_jwt.Jwt.JwtAuthenticationFilter;
+import ilogin.demo_jwt.User.Role; // Import añadido para Role
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -9,7 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.cors.CorsConfiguration;
@@ -57,9 +57,16 @@ public class SecurityConfig {
                                 // Permite el acceso público a todas las rutas que comiencen con "/auth/**"
                                 // (login, register, etc.)
                                 .requestMatchers("/auth/**").permitAll()
-                                // Exige que cualquier otra solicitud (como "/api/v1/demo")
-                                // deba estar autenticada.
-                                .anyRequest().authenticated()
+
+                                // Usuario autenticado (USER o ADMIN)
+                                .requestMatchers("/api/v1/demo").authenticated()
+                                .requestMatchers("/api/v1/user/**").authenticated()
+
+                                // Solo ADMIN
+                                .requestMatchers("/api/v1/admin/**").hasAuthority(Role.ADMIN.name())
+
+                                // Denegar todo lo demás por seguridad
+                                .anyRequest().denyAll()
                 )
 
                 // Configura la gestión de sesiones.
@@ -80,10 +87,8 @@ public class SecurityConfig {
 
                 // Construye el objeto SecurityFilterChain.
                 .build();
-
-
-
     }
+
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
@@ -97,5 +102,4 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration); // Aplica a todas las rutas
         return source;
     }
-
 }

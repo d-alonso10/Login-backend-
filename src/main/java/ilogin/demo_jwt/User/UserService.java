@@ -23,7 +23,7 @@ public class UserService {
     }
 
      //  Actualiza el perfil del usuario autenticado.
-    public User updateUser(UserUpdateRequest request) {
+    public UserResponseDTO updateUser(UserUpdateRequest request) {
         User user = getAuthenticatedUser();
 
         // Actualiza los campos solo si se proporcionaron en la solicitud (no son nulos)
@@ -42,7 +42,9 @@ public class UserService {
             user.setPassword(passwordEncoder.encode(request.getPassword()));
         }
 
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+
+        return UserResponseDTO.fromUser(savedUser);
     }
 
      // Elimina la cuenta del usuario autenticado.
