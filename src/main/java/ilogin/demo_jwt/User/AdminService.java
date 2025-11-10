@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public class AdminService {
     }
 
     // Actualizar usuario por ID
+    @Transactional
     public UserResponseDTO updateUser(Integer id, UserUpdateRequest request) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado con id: " + id));
@@ -55,6 +57,7 @@ public class AdminService {
     }
 
     // Eliminar usuario por ID
+    @Transactional
     public void deleteUser(Integer id) {
         if (!userRepository.existsById(id)) {
             throw new UsernameNotFoundException("Usuario no encontrado con id: " + id);

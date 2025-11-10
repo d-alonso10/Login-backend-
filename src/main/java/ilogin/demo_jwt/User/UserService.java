@@ -4,6 +4,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class UserService {
     }
 
      //  Actualiza el perfil del usuario autenticado.
+    @Transactional
     public UserResponseDTO updateUser(UserUpdateRequest request) {
         User user = getAuthenticatedUser();
 
@@ -48,6 +50,7 @@ public class UserService {
     }
 
      // Elimina la cuenta del usuario autenticado.
+    @Transactional
     public void deleteUser() {
         User user = getAuthenticatedUser();
         userRepository.delete(user);
