@@ -18,10 +18,15 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+// import lombok.Data; // <-- ELIMINADA
+import lombok.Getter;   // <-- AÑADIDA
+import lombok.Setter;   // <-- AÑADIDA
+import lombok.ToString; // <-- AÑADIDA
 import lombok.NoArgsConstructor;
 
-@Data
+@Getter         // <-- AÑADIDA
+@Setter         // <-- AÑADIDA
+@ToString       // <-- AÑADIDA
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
